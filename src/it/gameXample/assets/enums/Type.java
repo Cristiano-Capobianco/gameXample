@@ -6,7 +6,7 @@ import it.gameXample.assets.player.WizardPlayer;
 
 public enum Type {
 
-    GENERIC(1), WARRIOR(2), WIZARD(3);
+    WARRIOR(1), WIZARD(2);
 
     protected int value;
 
@@ -20,12 +20,11 @@ public enum Type {
 
     public static Player getPlayer(int value, String name) {
         switch (value) {
-            case 2:
+            case 1:
                 return new WarriorPlayer(name);
-            case 3:
+            case 2:
                 return new WizardPlayer(name);
-            default:
-                return new Player(name);
         }
+        return null;
     }
 }

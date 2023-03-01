@@ -95,7 +95,7 @@ public class Greenland {
                 if (choice == 1) {
                     fightEnemy(encounteredEnemy);
                 }
-            }while (encounteredEnemy.getHp() > 0 || choice != 2);
+            }while (encounteredEnemy.getHp() > 0 && choice != 2);
         }
     }
     private void fightEnemy(Enemy enemy) {

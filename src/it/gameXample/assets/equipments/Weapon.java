@@ -2,7 +2,7 @@ package it.gameXample.assets.equipments;
 
 import it.gameXample.assets.enums.Type;
 
-public class Weapon {
+public  abstract class Weapon {
 
     protected String name;
 
@@ -15,7 +15,6 @@ public class Weapon {
 
     public Weapon(String name, int damage) {
         this.name = name;
-        type = Type.GENERIC;
         this.damage = damage;
     }
 

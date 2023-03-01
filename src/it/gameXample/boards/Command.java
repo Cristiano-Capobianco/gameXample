@@ -21,7 +21,6 @@ public class Command {
 
     public static Action createPlayerTypeAction() {
         Option[] options = new Option [] {
-                new Option(Type.GENERIC.getValue(),"Generico", "Hai scelto un generico personaggio"),
                 new Option(Type.WARRIOR.getValue(), "Guerriero", "Hai scelto il Guerriero"),
                 new Option(Type.WIZARD.getValue(), "Mago", "Hai scelto il Mago")
         };
