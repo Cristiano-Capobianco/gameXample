@@ -1,6 +1,8 @@
 package it.gameXample.assets.player;
 
+import it.gameXample.assets.enemies.Enemy;
 import it.gameXample.assets.enums.Type;
+import it.gameXample.assets.equipments.Weapon;
 
 public class Player {
     protected String name;
@@ -11,6 +13,10 @@ public class Player {
     protected int damage;
 
     protected int resistance;
+
+    protected Weapon weapon;
+
+
 
     public Player(String name) {
         this.name = name;
@@ -54,7 +60,49 @@ public class Player {
         this.stamina = stamina;
     }
 
+    public int getDamage() {
+        return damage;
+    }
+
+    public void setDamage(int damage) {
+        this.damage = damage;
+    }
+
+    public int getResistance() {
+        return resistance;
+    }
+
+    public void setResistance(int resistance) {
+        this.resistance = resistance;
+    }
+
+    public Weapon getWeapon() {
+        return weapon;
+    }
+
+    public void setWeapon(Weapon weapon) {
+        if (this.type == weapon.getType()) {
+            this.weapon = weapon;
+        }
+    }
+
     public String toString () {
         return "Nome: " + name + "\nHP: " + hp + "\nStamina " + stamina;
+    }
+
+    protected double calculateDamage () {
+        if(weapon != null) {
+            return damage + weapon.getDamage();
+        }
+        return damage;
+    }
+
+    public void attackEnemy (Enemy enemy) {
+        double playerDamage = calculateDamage();
+        double totalDamage = playerDamage - enemy.getResistance();
+
+        double enemyHp = enemy.getHp();
+
+        enemy.setHp(enemyHp - totalDamage);
     }
 }

@@ -13,5 +13,11 @@ public class WizardPlayer extends Player {
     public String toString() {
         return "Nome: " + name + "\nHP: " + hp + "\nStamina " + stamina + "\nTipo " + type;
     }
+
+    @Override
+    protected double calculateDamage () {
+        double normalDamage = super.calculateDamage();
+        return normalDamage * 1.15;
+    }
 }
 

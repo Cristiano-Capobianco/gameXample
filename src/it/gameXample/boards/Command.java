@@ -29,4 +29,12 @@ public class Command {
         return new Action("Che ruolo vuoi avere?", options);
     }
 
+    public static Action createAttackAction () {
+        Option[] options = new Option[] {
+                new Option(1,"Attacca","Hai attaccato il nemico"),
+                new Option(2, "Scappa","Sei scappato"),
+        };
+        return new Action("Cosa vuoi fare?", options);
+    }
+
 }

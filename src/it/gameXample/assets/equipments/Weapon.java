@@ -34,4 +34,12 @@ public class Weapon {
     public void setDamage(int damage) {
         this.damage = damage;
     }
+
+    public Type getType() {
+        return type;
+    }
+
+    public void setType(Type type) {
+        this.type = type;
+    }
 }

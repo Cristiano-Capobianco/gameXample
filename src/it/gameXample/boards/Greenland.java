@@ -1,12 +1,14 @@
 package it.gameXample.boards;
 
 import it.gameXample.assets.actions.Action;
+import it.gameXample.assets.enemies.Enemy;
 import it.gameXample.assets.player.Player;
 import it.gameXample.assets.enums.Type;
 
 import java.io.InputStream;
 import java.io.PrintStream;
 import java.util.Scanner;
+import java.util.concurrent.ThreadLocalRandom;
 
 public class Greenland {
 
@@ -18,9 +20,13 @@ public class Greenland {
 
     private Player player;       // creo un campo di tipo generico player
 
+    private Enemy[] enemies;
+
     public Greenland(InputStream inputStream, PrintStream ui) {
         this.input = new Scanner(inputStream);
         this.ui = ui;
+
+        enemies = EnemyGenerator.generateEnemies();
     }
 
     public void startGame() {
@@ -37,9 +43,15 @@ public class Greenland {
             ui.print(moveAction);
             int choice = input.nextInt();
             ui.println(moveAction.getAnswer(choice));
+
             if (choice == 0){
                 exit = true;
             }
+
+            else if (choice !=4) {
+                searchEnemy();
+            }
+
             printSeparator();
         }while (!exit);
         ui.println("Grazie per aver giocato " + player.getName() + "!");
@@ -66,5 +78,29 @@ public class Greenland {
                 player.setStamina(50);
             }
         }
+    }
+
+    private void searchEnemy() {
+        int randomNr = ThreadLocalRandom.current().nextInt(1,101);
+        if (randomNr < 80) {
+            int  randomIndex = ThreadLocalRandom.current().nextInt(0, enemies.length);
+            Enemy encounteredEnemy = enemies[randomIndex];
+            ui.println("Ti sei imbattuto in un " + encounteredEnemy.getName());
+            Action attackAction = Command.createAttackAction();
+            int choice;
+            do {
+                ui.print(attackAction);
+                choice = input.nextInt();
+                ui.println(attackAction.getAnswer(choice));
+                if (choice == 1) {
+                    fightEnemy(encounteredEnemy);
+                }
+            }while (encounteredEnemy.getHp() > 0 || choice != 2);
+        }
+    }
+    private void fightEnemy(Enemy enemy) {
+            player.attackEnemy(enemy);
+            ui.println(enemy);
+            printSeparator();
     }
 }
