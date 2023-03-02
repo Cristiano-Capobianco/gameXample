@@ -1,11 +1,12 @@
 import it.gameXample.boards.Greenland;
+import it.gameXample.boards.interfaces.Startable;
 
 import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args) {
 
-        Greenland board = new Greenland(System.in, System.out);
+        Startable board = new Greenland(System.in, System.out);
         board.startGame();
     }
 }

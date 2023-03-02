@@ -4,8 +4,11 @@ import it.gameXample.assets.Character;
 import it.gameXample.assets.enemies.Enemy;
 import it.gameXample.assets.enums.Type;
 import it.gameXample.assets.equipments.Weapon;
+import it.gameXample.assets.interfaces.Striker;
 
-public abstract class Player extends Character {
+import java.util.concurrent.ThreadLocalRandom;
+
+public abstract class Player extends Character  implements Striker {
 
     protected Type type;
 
@@ -44,13 +47,20 @@ public abstract class Player extends Character {
     }
     @Override
     protected double calculateDamage () {
-        if(weapon != null) {
-            return damage + weapon.getDamage();
+        int randomNr = ThreadLocalRandom.current().nextInt(1,101);
+        double critDamage = 0;
+        if (randomNr <= 30) {
+            critDamage = damage * 1.2;
         }
-        return damage;
+
+        if(weapon != null) {
+            return damage + weapon.getDamage() + critDamage;
+        }
+        return damage + critDamage;
     }
 
-    public void attackEnemy (Enemy enemy) {
+    @Override
+    public void attack(Character enemy) {
         double playerDamage = calculateDamage();
         double totalDamage = playerDamage - enemy.getResistance();
 

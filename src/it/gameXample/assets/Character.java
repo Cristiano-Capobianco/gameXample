@@ -51,5 +51,6 @@ public abstract class Character {
         this.resistance = resistance;
     }
 
+    //Metodo astratto
     protected abstract double calculateDamage();
 }
