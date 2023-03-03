@@ -9,6 +9,7 @@ import it.gameXample.boards.interfaces.Startable;
 import java.io.InputStream;
 import java.io.PrintStream;
 import java.util.Arrays;
+import java.util.InputMismatchException;
 import java.util.Scanner;
 import java.util.concurrent.ThreadLocalRandom;
 
@@ -43,9 +44,7 @@ public class Greenland  implements Startable {
         boolean completed = false;
         do {
             Action moveAction = Command.createMoveAction(player);
-            ui.print(moveAction);
-            int choice = input.nextInt();
-            ui.println(moveAction.getAnswer(choice));
+            int choice = makeChoice(moveAction);
 
             if (choice == 0){
                 exit = true;
@@ -73,9 +72,7 @@ public class Greenland  implements Startable {
             String playerName = input.nextLine();
 
             Action typeAction = Command.createPlayerTypeAction();
-            ui.print(typeAction);
-            int choice = input.nextInt();
-            ui.println(typeAction.getAnswer(choice));
+            int choice = makeChoice(typeAction);
             player = Type.getPlayer(choice, playerName);
         }
         else {                                     // Se sono già in sessione il player esiste
@@ -105,9 +102,7 @@ public class Greenland  implements Startable {
         Action attackAction = Command.createAttackAction();
         int choice;
         do {
-            ui.print(attackAction);
-            choice = input.nextInt();
-            ui.println(attackAction.getAnswer(choice));
+            choice = makeChoice(attackAction);
             if (choice == 1) {
                 player.attack(enemy);
                 enemy.attack(player);
@@ -131,5 +126,24 @@ public class Greenland  implements Startable {
             }
         }
         return true;
+    }
+
+    private int makeChoice(Action action) {
+        boolean isValid = false;
+        int choice = 0;
+        do {
+            try {
+                ui.print(action);
+                choice = input.nextInt();
+                ui.println(action.getAnswer(choice));
+                isValid = true;
+            }catch (InputMismatchException e) {
+                ui.println("La scelta non è valida. Ritentare");
+                input.next();
+            }catch (Exception e) {
+                ui.println(e.getMessage());
+            }
+        }while (!isValid);
+        return choice;
     }
 }

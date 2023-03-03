@@ -11,13 +11,13 @@ public class Action {
         this.options = options;
     }
 
-    public String getAnswer(int choice){
+    public String getAnswer(int choice) throws Exception {
         for (Option o : options) {
             if (o.getValue() == choice){
                 return o.getAnswer();
             }
         }
-        return String.format("Il comando [%s] non  è valido", choice);
+     throw new Exception (String.format("Il comando [%s] non  è valido", choice));
     }
 
     public String toString() {
