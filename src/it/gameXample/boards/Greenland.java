@@ -8,6 +8,7 @@ import it.gameXample.boards.interfaces.Startable;
 
 import java.io.InputStream;
 import java.io.PrintStream;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.InputMismatchException;
 import java.util.Scanner;
@@ -23,7 +24,7 @@ public class Greenland  implements Startable {
 
     private Player player;       // creo un campo di tipo generico player
 
-    private Enemy[] enemies;
+    private ArrayList<Enemy> enemies;
 
     public Greenland(InputStream inputStream, PrintStream ui) {
         this.input = new Scanner(inputStream);
@@ -86,13 +87,13 @@ public class Greenland  implements Startable {
     private void searchEnemy() {
         int randomNr = ThreadLocalRandom.current().nextInt(1,101);                  //genero un numero tra 1 e 100(compreso)
         if (randomNr < 80) {                                                                     //verifico se la probabilità di incontrare un nemico è verificata (random < 80 -> 80%)
-            int  randomIndex = ThreadLocalRandom.current().nextInt(0, enemies.length);      // trovo un nemico casuale
-            Enemy encounteredEnemy = enemies[randomIndex];
+            int  randomIndex = ThreadLocalRandom.current().nextInt(0, enemies.size());      // trovo un nemico casuale
+            Enemy encounteredEnemy = enemies.get(randomIndex);
             if (encounteredEnemy != null) {
                 ui.println("Ti sei imbattuto in un " + encounteredEnemy.getName());                //contollo se il nemico incontrato è già morto in precednza
                 fightEnemy(encounteredEnemy);
                 if (encounteredEnemy.getHp() <= 0){
-                    enemies[randomIndex] = null;            //se il nemico arriva ad hp = 0, allora lo cancelliamo dall'array
+                    enemies.remove(encounteredEnemy);            //se il nemico arriva ad hp = 0, allora lo cancelliamo dall'array
                 }
             }
         }
@@ -120,12 +121,7 @@ public class Greenland  implements Startable {
     }
 
     private boolean isAllDefeated() {
-        for(Enemy e : enemies) {
-            if (e != null) {
-                return false;
-            }
-        }
-        return true;
+        return enemies.isEmpty();
     }
 
     private int makeChoice(Action action) {
