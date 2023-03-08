@@ -24,10 +24,14 @@ public class Action {
 
     public String toString() {
         StringBuilder result = new StringBuilder(question + "\n");
-        for (Map.Entry<Integer, Option> e : options.entrySet()) {
+        /*for (Map.Entry<Integer, Option> e : options.entrySet()) {                                   //Iteriamo sul set di Entry<chiave, valore> dell'hashMap delle opzioni
             String strOption = String.format("[%s] - %s", e.getKey(), e.getValue().toString() );
             result.append(strOption).append("\n");
-        }
+        }*/
+        options.forEach((key, value) -> {                                               // per ogni coppia chiave-azione
+            String strOption = String.format("[%s] - %s", key, value.toString() );      // creo la stringa dell'opzione
+            result.append(strOption).append("\n");                                      // la concateno al mio
+        });
         result.append("Risposta: ");
         return result.toString();
     }

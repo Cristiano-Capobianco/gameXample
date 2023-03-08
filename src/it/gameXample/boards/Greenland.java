@@ -77,7 +77,7 @@ public class Greenland  implements Startable {
             player = Type.getPlayer(choice, playerName);
         }
         else {                                     // Se sono già in sessione il player esiste
-            if (player.getHp() == 0) {               // Se ha gli hp = 0 allora lo faccio rivivere
+            if (player.getHp() == 0) {               // Se ha gli hp = 0 allora lo eliminiamo dalla lista
                 player.setHp(100);
                 player.setStamina(50);
             }
